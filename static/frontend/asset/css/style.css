@@ -1,0 +1,144 @@
+body {
+  border-top: 10px solid #333;
+  font: 12px/22px Verdana, sans-serif;
+  background: #333;
+}
+
+.navbar-static-top {
+    margin-bottom: 19px;
+}
+
+
+header {
+    background: #000 url(../image/banner.jpg) no-repeat 0px 0;
+    border-bottom: 1px solid #333;
+    height: 100px;
+    margin: 0 0 px 0;
+    padding: 0 10px;
+    position: relative;
+    border-top: 1px solid #A9A796;
+    border-left: 1px solid #A9A796;
+}
+
+header a {
+    background: #333;
+    color: #FFAC00;
+    font-size: 16px;
+    margin: 0 0 0 10px;
+    padding: 5px 10px;
+}
+
+h1, h3, h4, h5, h6 {
+    background: url(../image/ai6.png) no-repeat 0 2px;
+    border-bottom: 1px dotted #A9A796;
+    color: #222;
+    font-weight: bold;
+    margin: 0 0 10px;
+    padding: 0 0 0 25px;
+}
+
+h1 {
+    background: url(../image/ai6.png) no-repeat 0 4px;
+    font-size: 15px;
+}
+
+
+h3, h4, h5, h6 {
+    color: #333;
+    font-size: 13px;
+}
+
+
+.col-* ul li {
+    background: url(../image/ai2.png) no-repeat 0 8px;
+    padding: 0 0 0 17px;
+    list-style: none;
+}
+
+.col-* ul li a {
+    border-bottom: 1px dotted #504B2A;
+    color: #504b2a;
+    text-decoration: none;
+}
+
+.col-* ul li a:hover {
+    color : #000;
+}
+.col-* ul li *:TARGET {
+    color : #FF9900;
+}
+.container-flow {
+    background: #edebe1;
+    border: 1px solid #A9A796;
+    padding: 20px;
+}
+
+nav .container-flow{
+    background: #002000;
+    border-bottom: 1px solid #333;
+    border-left: 1px solid #A9A796;
+    border-top: 0;
+    padding: 0px;
+    margin: 0px;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #A79787;
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+ .navbar-default .navbar-nav>li.active{
+    color:#fff;
+}
+
+
+.navbar-static-top {
+    margin-bottom: 0px;
+}
+
+.navbar-nav>li>a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.navbar {
+    min-height: 0px;
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover {
+    color:#fff;
+    background: #002000;
+    border: 1px dashed;
+}
+
+.table-overflow {
+    height: 500px !important;
+    overflow: scroll;
+}​
+
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+tags-input-small {
+    width: 120px;
+    padding: 0;
+    margin: 0;
+}
+
+#jobOutputModal > .modal-dialog,
+#crashOutputModal > .modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+}
+#jobOutputModal > .modal-dialog > .modal-content,
+#crashOutputModal > .modal-dialog > .modal-content{
+  height: auto;
+  min-height: 100%;
+  border-radius: 0;
+}

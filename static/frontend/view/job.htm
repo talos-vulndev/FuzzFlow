@@ -1,0 +1,150 @@
+<div class="row">
+    <div class="col-md-12" >
+        <div class="row panel panel-default">
+            <div class="panel-heading">Job
+
+                <button type="button" class="pull-right btn btn-sm btn-success glyphicon glyphicon-plus"
+                        ng-click="toggleJobModal()">
+                </button>
+            </div>
+            <div class="panel-body">
+                <div ng-show="jobs.length > 0" class="table-overflow">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Target</th>
+                            <th>Engine</th>
+                            <th>Host</th>
+                            <th>State</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Options</th>
+                            <th><!--commands--></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="job in jobs">
+                            <td>{{job.id}}</td>
+                            <td>{{job.name}}</td>
+                            <td>{{getTargetName(job)}}</td>
+                            <td>{{getEngineName(job)}}</td>
+                            <td>{{getHostName(job)}}</td>
+                            <td>{{getStateName(job)}}</td>
+                            <td>{{formatDateTime(job.created_at)}}</td>
+                            <td>{{formatDateTime(job.updated_at)}}</td>
+                            <td>
+                                <span ng-repeat="opt in job.options">
+                                    {{getOptionById(opt.option_id).name}}={{opt.value}}
+                                    </br>
+                                </span>
+                            </td>
+                            <td>
+                                <button ng-show="getStateName(job) === 'Failed'" type="button" class="btn btn-sm btn-warning glyphicon glyphicon-repeat"
+                                    ng-click="repeatJob(job)">
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary glyphicon glyphicon-new-window"
+                                    ng-click="toggleShowJobOutputModal(job)">
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger glyphicon glyphicon-remove"
+                                    ng-click="removeJob(job)">
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <label ng-show="jobs.length === 0">No job is available.</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addJobModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <span>Add Job </span></br>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+                            <div class="form-group">
+                                <label>Count</label>
+                                <select ng-options="r for r in nodeCountRange"
+                                        ng-model="newJob.nodeCount"
+                                        class="form-control input-sm">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control input-sm" ng-model="newJob.name"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Target</label>
+                                <select ng-options="target as target.name for target in targets track by target.id"
+                                        ng-model="newJob.target"
+                                        class="form-control input-sm">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Engine</label>
+                                <select ng-options="engine as engine.name for engine in engines track by engine.id"
+                                        ng-model="newJob.engine"
+                                        class="form-control input-sm">
+                                </select>
+                            </div>
+                            <div ng-repeat="opt in newJob.engine.options track by opt.id" class="form-group">
+                                <label ng-show="getOptionType(opt) === 'FIELD'" >{{opt.name}}</label>
+                                <input ng-show="getOptionType(opt) === 'FIELD'" type="text" class="form-control input-sm" ng-model="opt.value">
+                                <label ng-show="getOptionType(opt) === 'FILE'" >{{opt.name}}</label>
+                                <input ng-show="getOptionType(opt) === 'FILE'" type="file" class="form-control input-sm" type='file' file-model="opt.value">
+                                <div ng-show="getOptionType(opt) === 'CHECKBOX'" class="checkbox">
+                                    <label><input type="checkbox" value="" ng-model="opt.value"><b>{{opt.name}}</b></label>
+                                </div>
+                                <label ng-show="getOptionType(opt) === 'LIST'" >{{opt.name}}</label>
+                                <tags-input ng-show="getOptionType(opt) === 'LIST'" ng-model="opt.list">
+                                </tags-input>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="createJob(newJob)" type="button" class="btn btn-sm btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="jobOutputModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <span>Output: </span><label>{{selectedJob.name}}</label>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 table-overflow">
+                        <pre><code>{{formatJobOutput(selectedJob.output)}}</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,48 @@
+<div class="row container">
+    <div class="col-md-12">
+    <h1>Fuzzing Report</h1>
+    Moflow fuzzing report for {{ formatDateTime(status.date) }}
+    <br>
+    <br>
+
+    <h3>Jobs</h3>
+    <ul>
+        <li>
+            There are currently {{ status.active_job_count}} <a href="#/job">active jobs</a>
+        </li>
+        <li>
+            There are currently {{ status.queued_job_count}} <a href="#/job">queued jobs</a>
+        </li>
+        <li>
+            There are currently {{ status.completed_job_count}} <a href="#/job">jobs completed</a>
+        </li>
+    </ul>
+    <h3>Crashes</h3>
+    <ul>
+        <!--<li>-->
+            <!--There are {{ overview.new_crashes.length }} new <a href="#/crash">crashes</a> in {{ overview.new_crashes.length }} different buckets this week-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--There are a total of {{ overview.buckets.length }} <a href="#/crash">crash buckets</a>-->
+        <!--</li>-->
+        <li>
+            There are a total of {{ status.crash_count}} <a href="#/crash">crashes</a>
+        </li>
+    </ul>
+    <h3>Fuzzing Nodes</h3>
+    <ul>
+        <li>
+            There are a total of {{ status.node_count}} <a href="#/node">Nodes</a>
+            <!--There are currently {{ overview.active_nodes.length }} <a href="#/node">active fuzzing nodes</a> of  {{ overview.active_nodes.length }} registered hosts-->
+        </li>
+        <!--$if len(hosts) > 0:
+        <li>
+            Average node uptime:
+            $ uptime = hosts[0].updated_at - hosts[0].updated_at
+            $for host in hosts:
+                $ uptime = uptime + (host.updated_at.replace(microsecond=0) - host.created_at.replace(microsecond=0))
+            $(uptime / len(hosts))
+        </li>-->
+    </ul>
+</div>
+</div>

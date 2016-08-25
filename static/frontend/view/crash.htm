@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-md-12" >
+        <div class="row panel panel-default">
+            <div class="panel-heading">Crash
+
+                <button type="button" class="pull-right btn btn-sm btn-success glyphicon glyphicon-plus"
+                        ng-click="toggleJobModal()">
+                </button>
+            </div>
+            <div class="panel-body">
+                <div ng-show="crashes.length > 0"class="table-overflow">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Job</th>
+                            <th>Sample</th>
+                            <th>Dump</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th><!--commands--></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="crash in crashes">
+                            <td>{{crash.id}}</td>
+                            <td>{{getJobName(crash)}}</td>
+                            <td><a href="{{getStaticURL(crash.repro_file)}}">{{getFileName(crash.repro_file)}}</a></td>
+                            <td><a href="{{getStaticURL(crash.dump_file)}}">{{getFileName(crash.dump_file)}}</a></td>
+                            <td>{{formatDateTime(crash.created_at)}}</td>
+                            <td>{{formatDateTime(crash.updated_at)}}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-primary glyphicon glyphicon-new-window"
+                                    ng-click="toggleShowCrashOutputModal(crash)">
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <label ng-show="crashes.length === 0">No crash is available.</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="crashOutputModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <span>Debug Output: </span><label>{{selectedCrash.id}}</label>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-overflow">
+                            <pre><code>{{selectedCrash.dbg_file_output}}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

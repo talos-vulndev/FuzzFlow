@@ -1,0 +1,107 @@
+<div class="row">
+    <div class="col-md-12" >
+        <div class="row panel panel-default">
+        <div class="panel-heading">Node
+
+        </div>
+        <div class="panel-body">
+            <div ng-show="nodes.length > 0" class="table-overflow">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Hostname</th>
+                    <th>IP Address</th>
+                    <th>MAC Address</th>
+                    <th>Platform</th>
+                    <th>Arch</th>
+                    <th>Created</th>
+                    <th>Host Id</th>
+                    <th>Last Update</th>
+                    <th>Uptime</th>
+                    <!--<th>Active</th>-->
+                    <!--<th></th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="node in nodes">
+                    <td>{{$index+1}}</td>
+                    <td>{{node.name}}</td>
+                    <td>{{node.ip}}</td>
+                    <td>{{node.mac}}</td>
+                    <td>{{getPlatformName(node)}}</td>
+                    <td>{{getArchName(node)}}</td>
+                    <td>{{formatDateTime (node.created_at)}}</td>
+                    <td>{{node.id}}</td>
+                    <td>{{formatDateTime(node.updated_at)}}</td>
+                    <td>{{uptime(node)}}</td>
+                    <!--<td>??</td>-->
+                    <!--<td>-->
+                        <!--<button type="button" class="btn btn-sm btn-default glyphicon glyphicon-cog"-->
+                                <!--ng-click="setSelectedNode(node)">-->
+                        <!--</button>-->
+                    <!--</td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+            <label ng-show="nodes.length === 0">No node is available.</label>
+        </div>
+        </div>
+
+        </div>
+    </div>
+</div>
+
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="nodeConfigModal" role="dialog">-->
+    <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                <!--<h4 class="modal-title">-->
+                    <!--<span>Node Config</span></br>-->
+                    <!--<span>{{shortenName(selectedNode.name)}}</span>-->
+                <!--</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-md-6">-->
+                        <!--<label>Architecture: </label>-->
+                        <!--<select ng-options="arch as arch.name for arch in arches track by arch.id"-->
+                                <!--ng-model="selectedNode.arch"-->
+                                <!--class="form-control input-sm">-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6"><label>Platform: </label>-->
+                        <!--<select ng-options="plat as plat.name for plat in platforms track by plat.id"-->
+                                <!--ng-model="selectedNode.platform"-->
+                                <!--class="form-control input-sm">-->
+                        <!--</select></div>-->
+                <!--</div>-->
+                <!--</br>-->
+                <!--<div class="row">-->
+                    <!--<div class="col-md-6">-->
+                        <!--<label>Engine: </label>-->
+                        <!--<tags-input add-from-autocomplete-only="true" ng-model="selectedNode.engine_tags">-->
+                            <!--<auto-complete min-length="0" load-on-empty="true" source="queryEngineTags($query)"></auto-complete>-->
+                        <!--</tags-input>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6">-->
+                        <!--<label>Target: </label>-->
+                        <!--<tags-input add-from-autocomplete-only="true" ng-model="selectedNode.target_tags">-->
+                            <!--<auto-complete min-length="0" load-on-empty="true" source="queryTargetTags($query)"></auto-complete>-->
+                        <!--</tags-input>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>-->
+                <!--<button ng-show="selectedNode.config" ng-click="saveNodeConfig()" type="button" class="btn btn-sm btn-info">Save</button>-->
+                <!--<button ng-show="!selectedNode.config" ng-click="addNodeConfig()" type="button" class="btn btn-sm btn-primary">Add</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--</div>-->

@@ -1,0 +1,431 @@
+<div class="row">
+    <div class="col-md-2"> <!-- required for floating -->
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs tabs-left">
+            <li id="archNav" class="active"><a ng-click="activateTab('#arch')" href>Architecture</a></li>
+            <li id="platformNav"><a href ng-click="activateTab('#platform')">Platform</a></li>
+            <li id="engineNav"><a  href ng-click="activateTab('#engine')" >Engine</a></li>
+            <li id="optionNav"><a href ng-click="activateTab('#option')" >Option</a></li>
+            <li id="targetNav"><a href ng-click="activateTab('#target')">Target</a></li>
+            <li id="scriptNav"><a href ng-click="activateTab('#script')">Script</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-10">
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="panel panel-default tab-pane active table-overflow" id="archTab">
+                <div class="panel-heading">Architecture</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <!--<th>#</th>-->
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="arch in arches">
+                            <!--<td style="width:10%">{{$index+1}}</td>-->
+                            <td style="width:10%">{{arch.id}}</td>
+                            <td>
+                                <span ng-show="!arch.configMode">{{arch.name}}</span>
+                                <input type="text" ng-show="arch.configMode" ng-model="arch.name" ng-value="arch.name"></input>
+                            </td>
+                            <td style="width:20%">
+                                <button ng-show="!arch.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-cog"
+                                        ng-click="toggleArchConfig(arch)">
+                                </button>
+                                <button ng-show="arch.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-arrow-left"
+                                        ng-click="toggleArchConfig(arch)">
+                                </button>
+                                <button ng-show="arch.configMode" type="button" class="btn btn-sm btn-danger glyphicon glyphicon-remove"
+                                        ng-click="removeArch(arch)">
+                                </button>
+                                <button ng-show="arch.configMode" type="button" class="btn btn-sm btn-success glyphicon glyphicon-ok"
+                                        ng-click="updateArch(arch)">
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--<td style="width:10%"></td>-->
+                            <td style="width:10%"></td>
+                            <td>
+                                <input type="text" ng-model="newArchName" ></input>
+                            </td>
+                            <td style="width:20%">
+                                <button type="button" class="btn btn-sm btn-success glyphicon glyphicon-plus"
+                                        ng-click="createArch(newArchName)">
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default tab-pane table-overflow" id="platformTab">
+                <div class="panel-heading">Platform</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <!--<th>#</th>-->
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="plat in platforms">
+                            <!--<td style="width:10%">{{$index+1}}</td>-->
+                            <td style="width:10%">{{plat.id}}</td>
+                            <td>
+                                <span ng-show="!plat.configMode">{{plat.name}}</span>
+                                <input type="text" ng-show="plat.configMode" ng-model="plat.name" ng-value="plat.name" />
+                            </td>
+                            <td style="width:20%">
+                                <button ng-show="!plat.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-cog"
+                                        ng-click="togglePlatformConfig(plat)">
+                                </button>
+                                <button ng-show="plat.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-arrow-left"
+                                        ng-click="togglePlatformConfig(plat)">
+                                </button>
+                                <button ng-show="plat.configMode" type="button" class="btn btn-sm btn-danger glyphicon glyphicon-remove"
+                                        ng-click="removePlatform(plat)">
+                                </button>
+                                <button ng-show="plat.configMode" type="button" class="btn btn-sm btn-success glyphicon glyphicon-ok"
+                                        ng-click="updatePlatform(plat)">
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--<td style="width:10%">                       </td>-->
+                            <td style="width:10%"></td>
+                            <td>
+                                <input type="text" ng-model="newPlatformName" />
+                            </td>
+                            <td style="width:20%">
+                                <button type="button" class="btn btn-sm btn-success glyphicon glyphicon-plus"
+                                        ng-click="createPlatform(newPlatformName)">
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default tab-pane table-overflow" id="engineTab">
+                <div class="panel-heading">Engine</div><div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <!--<th>#</th>-->
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Path</th>
+                        <th>Platform</th>
+                        <th>Arch</th>
+                        <th>Option</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="engine in engines">
+                        <!--<td style="width:5%">{{$index+1}}</td>-->
+                        <td style="width:5%">{{engine.id}}</td>
+                        <td style="width:15%">
+                            <span ng-show="!engine.configMode">{{engine.name}}</span>
+                            <input type="text" style="width:100%" ng-show="engine.configMode" ng-model="engine.name" ng-value="engine.name" />
+                        </td>
+                        <td>
+                            <span ng-show="!engine.configMode">{{engine.path}}</span>
+                            <textarea style="width:100%" ng-show="engine.configMode" ng-model="engine.path" ng-value="engine.path" />
+                        </td>
+                        <td  style="width:15%">
+                            <span ng-show="!engine.configMode">{{getEnginePlatform(engine)}}</span>
+                            <select ng-show="engine.configMode" ng-options="plat as plat.name for plat in platforms track by plat.id"
+                                    ng-model="engine.platform"
+                                    class="form-control input-sm">
+                            </select>
+                        </td>
+                        <td  style="width:15%">
+                            <span ng-show="!engine.configMode">{{getEngineArch(engine)}}</span>
+                            <select ng-show="engine.configMode" ng-options="arch as arch.name for arch in arches track by arch.id"
+                                    ng-model="engine.arch"
+                                    class="form-control input-sm">
+                            </select>
+                        </td>
+                        <td style="15%">
+                            <span ng-show="!engine.configMode" ng-repeat="tag in engine.option_tags"  >{{tag.text}},&nbsp;</span>
+                            <tags-input  ng-show="engine.configMode" add-from-autocomplete-only="true" ng-model="engine.option_tags">
+                                <auto-complete min-length="0" load-on-empty="true" source="queryOptionTags($query)"></auto-complete>
+                            </tags-input>
+                        </td>
+                        <td style="width:20%">
+                            <button ng-show="!engine.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-cog"
+                                    ng-click="toggleEngineConfig(engine)">
+                            </button>
+                            <button ng-show="engine.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-arrow-left"
+                                    ng-click="toggleEngineConfig(engine)">
+                            </button>
+                            <button ng-show="engine.configMode" type="button" class="btn btn-sm btn-danger glyphicon glyphicon-remove"
+                                    ng-click="removeEngine(engine)">
+                            </button>
+                            <button ng-show="engine.configMode" type="button" class="btn btn-sm btn-success glyphicon glyphicon-ok"
+                                    ng-click="updateEngine(engine)">
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!--<td style="width:5%"></td>-->
+                        <td style="width:5%"></td>
+                        <td style="width:15%">
+                            <input type="text" style="width:100%" ng-model="newEngine.name" ng-value="newEngine.name" />
+                        </td>
+                        <td>
+                            <textarea style="width:100%" ng-model="newEngine.path" ng-value="newEngine.path" />
+                        </td>
+                        <td  style="width:15%">
+                            <select ng-options="plat as plat.name for plat in platforms track by plat.id"
+                                    ng-model="newEngine.platform"
+                                    class="form-control input-sm">
+                            </select>
+                        </td>
+                        <td  style="width:15%">
+                            <select ng-options="arch as arch.name for arch in arches track by arch.id"
+                                    ng-model="newEngine.arch"
+                                    class="form-control input-sm">
+                            </select>
+                        </td>
+                        <td style="width:15%">
+                            <tags-input add-from-autocomplete-only="true" ng-model="newEngine.option_tags">
+                                <auto-complete min-length="0" load-on-empty="true"
+                                               source="queryOptionTags($query)">
+                                </auto-complete>
+                            </tags-input>
+                        </td>
+                        <td style="width:20%">
+                            <button type="button" class="btn btn-sm btn-success glyphicon glyphicon-plus"
+                                    ng-click="createEngine(newEngine)">
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            <div class="panel panel-default tab-pane table-overflow" id="targetTab">
+                <div class="panel-heading">Target</div><div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <!--<th>#</th>-->
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Path</th>
+                        <th>Platform</th>
+                        <th>Arch</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="target in targets">
+                        <!--<td style="width:5%">{{$index+1}}</td>-->
+                        <td style="width:5%">{{target.id}}</td>
+                        <td style="width:15%">
+                            <span ng-show="!target.configMode">{{target.name}}</span>
+                            <input type="text" style="width:100%" ng-show="target.configMode" ng-model="target.name" ng-value="target.name" />
+                        </td>
+                        <td>
+                            <span ng-show="!target.configMode">{{target.path}}</span>
+                            <textarea style="width:100%" ng-show="target.configMode" ng-model="target.path" ng-value="target.path" />
+                        </td>
+                        <td  style="width:15%">
+                            <span ng-show="!target.configMode">{{getTargetPlatform(target)}}</span>
+                            <select ng-show="target.configMode" ng-options="plat as plat.name for plat in platforms track by plat.id"
+                                    ng-model="target.platform"
+                                    class="form-control input-sm">
+                            </select>
+                        </td>
+                        <td  style="width:15%">
+                            <span ng-show="!target.configMode">{{getTargetArch(target)}}</span>
+                            <select ng-show="target.configMode" ng-options="arch as arch.name for arch in arches track by arch.id"
+                                    ng-model="target.arch"
+                                    class="form-control input-sm">
+                            </select>
+                        </td>
+                        <td style="width:20%">
+                            <button ng-show="!target.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-cog"
+                                    ng-click="toggleTargetConfig(target)">
+                            </button>
+                            <button ng-show="target.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-arrow-left"
+                                    ng-click="toggleTargetConfig(target)">
+                            </button>
+                            <button ng-show="target.configMode" type="button" class="btn btn-sm btn-danger glyphicon glyphicon-remove"
+                                    ng-click="removeTarget(target)">
+                            </button>
+                            <button ng-show="target.configMode" type="button" class="btn btn-sm btn-success glyphicon glyphicon-ok"
+                                    ng-click="updateTarget(target)">
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!--<td style="width:5%"></td>-->
+                        <td style="width:5%"></td>
+                        <td style="width:15%">
+                            <input type="text" style="width:100%" ng-model="newTarget.name" ng-value="newTarget.name" />
+                        </td>
+                        <td>
+                            <textarea style="width:100%" ng-model="newTarget.path" ng-value="newTarget.path" />
+                        </td>
+                        <td  style="width:15%">
+                            <select ng-options="plat as plat.name for plat in platforms track by plat.id"
+                                    ng-model="newTarget.platform"
+                                    class="form-control input-sm">
+                            </select>
+                        </td>
+                        <td  style="width:15%">
+                            <select ng-options="arch as arch.name for arch in arches track by arch.id"
+                                    ng-model="newTarget.arch"
+                                    class="form-control input-sm">
+                            </select>
+                        </td>
+                        <td style="width:20%">
+                            <button type="button" class="btn btn-sm btn-success glyphicon glyphicon-plus"
+                                    ng-click="createTarget(newTarget)">
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table></div>
+            </div>
+            <div class="panel panel-default tab-pane table-overflow" id="scriptTab">
+                <div class="panel-heading">Script</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <!--<th>#</th>-->
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Script</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="script in scripts">
+                            <!--<td style="width:5%">{{$index+1}}</td>-->
+                            <td style="width:5%">{{script.id}}</td>
+                            <td style="width:15%">
+                                <span ng-show="!script.configMode">{{script.name}}</span>
+                                <input type="text" style="width:100%" ng-show="script.configMode" ng-model="script.name" ng-value="script.name" />
+                            </td>
+                            <td>
+                                <pre ng-show="!script.configMode" ><code class="html">{{script.script}}</code></pre>
+                                <textarea style="width:100%" ng-show="script.configMode" ng-model="script.script" ng-value="script.script" />
+                            </td>
+                            <td style="width:20%">
+                                <button ng-show="!script.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-cog"
+                                        ng-click="toggleScriptConfig(script)">
+                                </button>
+                                <button ng-show="script.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-arrow-left"
+                                        ng-click="toggleScriptConfig(script)">
+                                </button>
+                                <button ng-show="script.configMode" type="button" class="btn btn-sm btn-danger glyphicon glyphicon-remove"
+                                        ng-click="removeScript(script)">
+                                </button>
+                                <button ng-show="script.configMode" type="button" class="btn btn-sm btn-success glyphicon glyphicon-ok"
+                                        ng-click="updateScript(script)">
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--<td style="width:5%"></td>-->
+                            <td style="width:5%"></td>
+                            <td style="width:15%">
+                                <input type="text" style="width:100%" ng-model="newScript.name" ng-value="newScript.name" />
+                            </td>
+                            <td>
+                                <textarea style="width:100%" ng-model="newScript.script" ng-value="newScript.script" />
+                            </td>
+                            <td style="width:20%">
+                                <button type="button" class="btn btn-sm btn-success glyphicon glyphicon-plus"
+                                        ng-click="createScript(newScript)">
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table></div>
+            </div>
+
+            <div  class="panel panel-default tab-pane table-overflow" id="optionTab">
+                <div class="panel-heading">Option</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <!--<th>#</th>-->
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="option in options">
+                            <!--<td style="width:10%">{{$index+1}}</td>-->
+                            <td style="width:5%">{{option.id}}</td>
+                            <td>
+                                <span ng-show="!option.configMode">{{option.name}}</span>
+                                <input type="text" style="width:100%" ng-show="option.configMode" ng-model="option.name" ng-value="option.name" />
+                            </td>
+                            <td  style="width:20%">
+                                <span ng-show="!option.configMode">{{getOptionType(option)}}</span>
+                                <select ng-show="option.configMode" ng-options="typ as typ.name for typ in option_types track by typ.id"
+                                        ng-model="option.type"
+                                        class="form-control input-sm">
+                                </select>
+                                <!--<input type="text" ng-show="engine.configMode" ng-model="engine.path" ng-value="engine.path"></input>-->
+                            </td>
+                            <td style="width:20%">
+                                <button ng-show="!option.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-cog"
+                                        ng-click="toggleOptionConfig(option)">
+                                </button>
+                                <button ng-show="option.configMode" type="button" class="btn btn-sm btn-default glyphicon glyphicon-arrow-left"
+                                        ng-click="toggleOptionConfig(option)">
+                                </button>
+                                <button ng-show="option.configMode" type="button" class="btn btn-sm btn-danger glyphicon glyphicon-remove"
+                                        ng-click="removeOption(option)">
+                                </button>
+                                <button ng-show="option.configMode" type="button" class="btn btn-sm btn-success glyphicon glyphicon-ok"
+                                        ng-click="updateOption(option)">
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--<td style="width:5%"></td>-->
+                            <td style="width:10%"></td>
+                            <td>
+                                <input type="text" style="width:100%" ng-model="newOption.name" ng-value="newOption.name" />
+                            </td>
+                            <td style="width:20%">
+                                <select ng-options="typ as typ.name for typ in option_types track by typ.id"
+                                        ng-model="newOption.type"
+                                        class="form-control input-sm">
+                                </select>
+                            </td>
+                            <td style="width:20%">
+                                <button type="button" class="btn btn-sm btn-success glyphicon glyphicon-plus"
+                                        ng-click="createOption(newOption)">
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
