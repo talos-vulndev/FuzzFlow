@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 sudo add-apt-repository -y ppa:nginx/stable
 sudo apt-get update
-sudo apt-get install -y build-essential python-dev python-pip nginx nginx-extra uwsgi uwsgi-plugin-python
+sudo apt-get install -y build-essential python-dev python-pip nginx nginx-extras uwsgi uwsgi-plugin-python
 sudo pip install virtualenv
 cd /vagrant
 virtualenv .env --always-copy --no-site-packages
